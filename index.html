@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centering Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        input { width: 50px; text-align: center; margin: 5px; }
+        button { padding: 5px 15px; margin: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Centering Calculator</h1>
+    <label>Left/Top Border: <input type="number" id="leftBorder" value="20"></label>
+    <label>Right/Bottom Border: <input type="number" id="rightBorder" value="40"></label>
+    <br>
+    <button onclick="calculateCentering()">Calculate</button>
+    
+    <h2>Centering Grade: <span id="grade"></span></h2>
+    <h3>Left/Top: <span id="leftPercentage"></span>% | Right/Bottom: <span id="rightPercentage"></span>%</h3>
+
+    <script>
+        function calculateCentering() {
+            let left = parseFloat(document.getElementById("leftBorder").value);
+            let right = parseFloat(document.getElementById("rightBorder").value);
+
+            if (left <= 0 || right <= 0) {
+                document.getElementById("grade").innerText = "Invalid input";
+                document.getElementById("leftPercentage").innerText = "";
+                document.getElementById("rightPercentage").innerText = "";
+                return;
+            }
+
+            let total = left + right;
+            let leftPercent = (left / total) * 100;
+            let rightPercent = (right / total) * 100;
+            let finalPercent = Math.max(leftPercent, rightPercent); // Determines the larger offset
+
+            // Corrected grading system based on finalPercent
+            let centeringGrade;
+            if (finalPercent <= 55) centeringGrade = 10;
+            else if (finalPercent <= 60) centeringGrade = 9;
+            else if (finalPercent <= 65) centeringGrade = 8;
+            else if (finalPercent <= 70) centeringGrade = 7;
+            else if (finalPercent <= 75) centeringGrade = 6;
+            else centeringGrade = 5;
+
+            document.getElementById("grade").innerText = centeringGrade;
+            document.getElementById("leftPercentage").innerText = leftPercent.toFixed(1);
+            document.getElementById("rightPercentage").innerText = rightPercent.toFixed(1);
+        }
+    </script>
+</body>
+</html>
